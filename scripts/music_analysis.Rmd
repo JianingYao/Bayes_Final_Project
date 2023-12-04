@@ -1,0 +1,67 @@
+---
+title: "music_analysis"
+author: "Yulu"
+date: "12/1/2023"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+palette1=RColorBrewer::brewer.pal(9,"Blues")
+library(tidyverse)
+library(dplyr)
+library(lubridate)
+library(ggplot2)
+
+```
+
+
+```{r}
+music=read.csv("/Users/danny/Desktop/music.csv",header=T,stringsAsFactors = FALSE)
+
+music=na.omit(music)
+music=distinct(music)
+summary(music)
+music=music %>% select(-Permissions,Timestamp)
+
+```
+
+
+
+```{r}
+hist(music$Age, main="Histogram of Age", xlab="Age",col = palette1[c(3)], border="black")
+music[music$Age > 65, ]
+music_clean=music[music$Age <= 65,]
+nrow(music_clean)
+
+```
+
+
+```{r}
+hist(music$Hours.per.day, main="Histogram of Hours per day", xlab="Hours per day",col = palette1[c(3)], border="black")
+music[music$Hours.per.day > 15, ]
+music_clean=music_clean[music_clean$Hours.per.day <= 15,]
+nrow(music_clean)
+```
+
+```{r}
+music=music[music$BPM < 500, ]
+hist(music$BPM, main="Histogram of BPM", xlab="BPM",col = palette1[c(3)], border="black")
+music_clean=music_clean[music_clean$BPM <= 500,]
+nrow(music_clean)
+```
+
+
+
+
+
+
+
+
+
+
+
+
